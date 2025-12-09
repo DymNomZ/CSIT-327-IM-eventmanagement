@@ -4,10 +4,10 @@ from django.db import models
 
 class Account(models.Model):
     username = models.CharField(max_length=15, primary_key=True)
-    password = models.CharField(max_length=15)
-    firstname = models.CharField(max_length=50)
+    password = models.CharField(max_length=15, null=False)
+    firstname = models.CharField(max_length=50, null=False)
     middlename = models.CharField(max_length=50, null=True)
-    lastname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50, null=False)
     type_user = (("S", "Student"), ("T", "Teacher"))
     type = models.CharField(max_length=1, choices=type_user, default="S")
 
@@ -21,3 +21,6 @@ class Student(Account):
 
 class Teacher(Account):
     age = models.IntegerField(default=0)
+
+class Specialization(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
